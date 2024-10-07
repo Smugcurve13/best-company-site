@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from send_email import send_email
 
 topics = []
 
@@ -18,6 +19,14 @@ with st.form(key='email_form'):
         topics
     )
     text = st.text_area("Text")
+    message = f'''\
+Subject: New email from {usermail}
+
+From: {usermail}
+Topic: {topic}
+{text}
+'''
     submit_bt = st.form_submit_button("Submit")
     if submit_bt:
+        send_email(message)
         st.info("Your Email was sent successfully")
